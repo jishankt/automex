@@ -2,6 +2,10 @@ import os
 from pathlib import Path
 from decouple import config, Csv
 
+import dj_database_url
+
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security
@@ -9,7 +13,8 @@ SECRET_KEY = config('-2-ur4=ndt=n#s9kgtz79czh7ikt*i+2#kmmql3%=m2^ppn5yj', defaul
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 # Allowed Hosts
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=Csv())
+ALLOWED_HOSTS = ["automex.onrender.com", "localhost"]
+
 
 # Applications
 INSTALLED_APPS = [
@@ -35,6 +40,8 @@ INSTALLED_APPS = [
 ]
 
 # Middleware
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
 
@@ -96,10 +103,11 @@ USE_TZ = True
 # Static files (Render + Whitenoise)
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 
 # Whitenoise compression
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media files
 MEDIA_URL = '/media/'
