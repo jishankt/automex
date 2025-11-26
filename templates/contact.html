@@ -1,0 +1,356 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Contact Us - {% if company_info %}{{ company_info.name }}{% else %}AutoMex{% endif %}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="section-title">Contact Us</h1>
+                <p class="section-subtitle">Get in touch to discuss your project</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mb-5">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="card-title mb-4">Send us a Message</h3>
+                        <p class="text-muted mb-4">Fill out the form below and we'll get back to you as soon as possible.</p>
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_name" class="form-label">Full Name *</label>
+                                    <input type="text" class="form-control" id="id_name" name="name" required placeholder="Your full name">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="id_email" class="form-label">Email Address *</label>
+                                    <input type="email" class="form-control" id="id_email" name="email" required placeholder="automextechnologies@gmail.com">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_subject" class="form-label">Subject *</label>
+                                <input type="text" class="form-control" id="id_subject" name="subject" required placeholder="What is this regarding?">
+                            </div>
+                            <div class="mb-4">
+                                <label for="id_message" class="form-label">Message *</label>
+                                <textarea class="form-control" id="id_message" name="message" rows="5" required placeholder="Tell us about your project or inquiry..."></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg w-100">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="card-title mb-4">Contact Information</h3>
+                        
+                       <div class="contact-info mb-4 d-flex">
+    <div class="contact-icon me-3">
+        <div class="icon-wrapper bg-primary text-white rounded-circle d-flex align-items-center justify-content-center">
+            <i class="fas fa-envelope"></i>
+        </div>
+    </div>
+    <div>
+        <h5 class="mb-1">Email</h5>
+        <p class="mb-0 text-muted">automextechnologies@gmail.com</p>
+    </div>
+</div>
+
+<div class="contact-info mb-4 d-flex">
+    <div class="contact-icon me-3">
+        <div class="icon-wrapper bg-primary text-white rounded-circle d-flex align-items-center justify-content-center">
+            <i class="fas fa-phone-alt"></i>
+        </div>
+    </div>
+    <div>
+        <h5 class="mb-1">Phone</h5>
+        <p class="mb-0 text-muted">+91 89218 47262</p>
+    </div>
+</div>
+
+<div class="contact-info mb-4 d-flex">
+    <div class="contact-icon me-3">
+        <div class="icon-wrapper bg-primary text-white rounded-circle d-flex align-items-center justify-content-center">
+            <i class="fas fa-map-marker-alt"></i>
+        </div>
+    </div>
+    <div>
+        <h5 class="mb-1">Location</h5>
+        <p class="mb-0 text-muted">Calicut, Palayam</p>
+    </div>
+</div>
+
+                    </div>
+                </div>
+                
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-3">Follow Us</h5>
+                        <div class="social-links d-flex justify-content-start">
+                            <a href="https://www.linkedin.com/in/automex-solutions" class="social-link me-3" target="_blank">
+                                <div class="icon-wrapper bg-light text-primary rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </div>
+                            </a>
+                            <a href="https://instagram.com/automex.in" class="social-link me-3" target="_blank">
+                                <div class="icon-wrapper bg-light text-primary rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="fab fa-instagram"></i>
+                                </div>
+                            </a>
+                            <a href="mailto:automextechnoogies@gmail.com" class="social-link">
+                                <div class="icon-wrapper bg-light text-primary rounded-circle d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title">Find Us</h2>
+                <p class="section-subtitle">Visit our office or get in touch</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="map-container rounded-3 overflow-hidden shadow-sm">
+                    <div class="map-placeholder bg-white text-center py-5">
+                        <div class="map-icon mb-3">
+                            <i class="fas fa-map-marker-alt fa-3x text-primary"></i>
+                        </div>
+                        <h4 class="mb-2">Our Location</h4>
+                        <p class="text-muted mb-3">Calicut, Palayam</p>
+                        <div class="d-flex justify-content-center flex-wrap gap-2">
+                            <a href="#" class="btn btn-outline-primary me-2">
+                                <i class="fas fa-directions me-1"></i>Get Directions
+                            </a>
+                            <a href="#" class="btn btn-primary">
+                                <i class="fas fa-map me-1"></i>View on Map
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 text-center mb-5">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <p class="section-subtitle">Quick answers to common questions</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="faqHeading1">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1">
+                                How quickly do you respond to inquiries?
+                            </button>
+                        </h2>
+                        <div id="faqCollapse1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                We typically respond to all inquiries within 24 hours during business days. For urgent matters, please email us directly at automextechnoogies@gmail.com.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="faqHeading2">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2">
+                                What information should I include in my project inquiry?
+                            </button>
+                        </h2>
+                        <div id="faqCollapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Please include your project goals, timeline, budget range, and any specific requirements. The more details you provide, the better we can assist you.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 mb-3 shadow-sm">
+                        <h2 class="accordion-header" id="faqHeading3">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3">
+                                Do you offer free consultations?
+                            </button>
+                        </h2>
+                        <div id="faqCollapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, we offer free initial consultations to discuss your project requirements and determine how we can help you achieve your goals.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item border-0 shadow-sm">
+                        <h2 class="accordion-header" id="faqHeading4">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse4">
+                                What types of projects do you typically work on?
+                            </button>
+                        </h2>
+                        <div id="faqCollapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                We work on a wide range of projects including web development, mobile apps, digital transformation, business process automation, and custom software solutions.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .contact-icon .icon-wrapper {
+        width: 50px;
+        height: 50px;
+        flex-shrink: 0;
+    }
+    
+    .social-link .icon-wrapper {
+        width: 45px;
+        height: 45px;
+        transition: all 0.3s ease;
+    }
+    
+    .social-link:hover .icon-wrapper {
+        background: var(--primary-color) !important;
+        color: white !important;
+        transform: translateY(-3px);
+    }
+    
+    .map-container {
+        border: 1px solid #e2e8f0;
+    }
+    
+    .map-placeholder {
+        min-height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .map-icon {
+        margin-bottom: 1rem;
+    }
+    
+    .form-control {
+        border: 1px solid #e2e8f0;
+        padding: 12px 15px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+    
+    .form-label {
+        font-weight: 500;
+        color: var(--dark-color);
+        margin-bottom: 8px;
+    }
+    
+    .accordion-button {
+        background: white;
+        color: var(--dark-color);
+        font-weight: 500;
+        padding: 1rem 1.25rem;
+        border-radius: 8px !important;
+    }
+    
+    .accordion-button:not(.collapsed) {
+        background: var(--primary-color);
+        color: white;
+        box-shadow: none;
+    }
+    
+    .accordion-button:focus {
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        border-color: var(--primary-color);
+    }
+    
+    .accordion-body {
+        padding: 1rem 1.25rem;
+        color: var(--secondary-color);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const contactForm = document.querySelector('form');
+        
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                const requiredFields = contactForm.querySelectorAll('[required]');
+                let isValid = true;
+                
+                requiredFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        isValid = false;
+                        field.classList.add('is-invalid');
+                    } else {
+                        field.classList.remove('is-invalid');
+                    }
+                });
+                
+                if (!isValid) {
+                    e.preventDefault();
+                    if (!document.querySelector('.form-error')) {
+                        const errorDiv = document.createElement('div');
+                        errorDiv.className = 'alert alert-danger mt-3 form-error';
+                        errorDiv.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Please fill in all required fields.';
+                        contactForm.appendChild(errorDiv);
+                    }
+                }
+            });
+            
+            // Real-time validation
+            const inputs = contactForm.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (this.value.trim()) {
+                        this.classList.remove('is-invalid');
+                        this.classList.add('is-valid');
+                    } else {
+                        this.classList.remove('is-valid');
+                    }
+                });
+            });
+        }
+        
+        // Smooth scroll for FAQ items
+        const faqButtons = document.querySelectorAll('.accordion-button');
+        faqButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            });
+        });
+    });
+</script>
+{% endblock %}

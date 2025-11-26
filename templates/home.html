@@ -1,0 +1,935 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - {% if company_info %}{{ company_info.name }}{% else %}AutoMex{% endif %}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="hero-text-container">
+                    <h1 class="display-4 fw-bold mb-4 hero-main-text">Transform Your Business with AutoMex</h1>
+                    <p class="lead mb-4 hero-sub-text">We provide cutting-edge technology solutions and strategic consulting to drive your business growth in the digital era.</p>
+                    <div class="hero-buttons">
+                        <a href="{% url 'service_list' %}" class="btn btn-primary btn-lg me-3 hero-btn-1">Our Services</a>
+                        <a href="{% url 'contact' %}" class="btn btn-outline-primary btn-lg hero-btn-2">Get Started</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image-container position-relative">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Business Growth" class="img-fluid rounded-3 shadow-lg hero-image">
+                    <div class="floating-element floating-1">
+                        <div class="floating-card bg-primary text-white p-3 rounded-3 shadow">
+                            <i class="fas fa-chart-line fa-2x mb-2"></i>
+                            <h6 class="mb-0">Growth</h6>
+                        </div>
+                    </div>
+                    <div class="floating-element floating-2">
+                        <div class="floating-card bg-white p-3 rounded-3 shadow">
+                            <i class="fas fa-rocket fa-2x text-primary mb-2"></i>
+                            <h6 class="mb-0">Innovation</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Rest of your existing sections remain the same -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title center">Our Services</h2>
+            <p class="section-subtitle">Comprehensive solutions for your business needs</p>
+        </div>
+        
+        <div class="row">
+            {% for service in services %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card service-card h-100 text-center border-0">
+                    <div class="card-body p-4">
+                        <div class="service-icon mx-auto mb-3">
+                            <i class="{{ service.icon|default:'fas fa-cogs' }} fa-2x"></i>
+                        </div>
+                        <h5 class="card-title mb-3">{{ service.title }}</h5>
+                        <p class="card-text text-muted">{{ service.short_description|default:"Professional service to help your business grow and succeed in the digital landscape." }}</p>
+                        <a href="{% url 'service_detail' service.slug %}" class="btn btn-outline-primary mt-auto">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default services when none are available -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card service-card h-100 text-center border-0">
+                    <div class="card-body p-4">
+                        <div class="service-icon mx-auto mb-3">
+                            <i class="fas fa-laptop-code fa-2x"></i>
+                        </div>
+                        <h5 class="card-title mb-3">Web Development</h5>
+                        <p class="card-text text-muted">Custom web applications and responsive websites tailored to your business needs.</p>
+                        <a href="{% url 'service_list' %}" class="btn btn-outline-primary mt-auto">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card service-card h-100 text-center border-0">
+                    <div class="card-body p-4">
+                        <div class="service-icon mx-auto mb-3">
+                            <i class="fas fa-mobile-alt fa-2x"></i>
+                        </div>
+                        <h5 class="card-title mb-3">Mobile Solutions</h5>
+                        <p class="card-text text-muted">iOS and Android applications to engage your customers on any device.</p>
+                        <a href="{% url 'service_list' %}" class="btn btn-outline-primary mt-auto">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card service-card h-100 text-center border-0">
+                    <div class="card-body p-4">
+                        <div class="service-icon mx-auto mb-3">
+                            <i class="fas fa-cloud fa-2x"></i>
+                        </div>
+                        <h5 class="card-title mb-3">Cloud Solutions</h5>
+                        <p class="card-text text-muted">Scalable cloud infrastructure and migration services for modern businesses.</p>
+                        <a href="{% url 'service_list' %}" class="btn btn-outline-primary mt-auto">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'service_list' %}" class="btn btn-primary btn-lg">View All Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">15+</h3>
+                    <p class="text-muted mb-0">Projects Completed</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">12+</h3>
+                    <p class="text-muted mb-0">Happy Clients</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">2+</h3>
+                    <p class="text-muted mb-0">Years Experience</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">24/7</h3>
+                    <p class="text-muted mb-0">Support</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Clients Section -->
+<section class="clients-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title center">Our Valued Clients</h2>
+            <p class="section-subtitle">Trusted by innovative businesses worldwide</p>
+        </div>
+
+        <div class="clients-scroll-wrapper" style="position: relative;">
+            <div class="client-logo-scroll" id="clientScroll">
+
+                {% for client in clients %}
+                <div class="client-logo-item">
+                    {% if client.logo %}
+                    <div class="client-logo-container">
+                        <img src="{{ client.logo.url }}" class="img-fluid client-logo" alt="{{ client.name }}">
+                    </div>
+                    {% else %}
+                    <div class="client-placeholder">
+                        <i class="fas fa-building fa-2x text-primary"></i>
+                        <p class="mb-0">{{ client.name }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% empty %}
+
+                <!-- Default placeholders if no clients -->
+               
+                
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <p class="text-muted">Trusted by 50+ companies worldwide</p>
+        </div>
+    </div>
+</section>
+
+
+<!-- Featured Projects -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title center">Featured Projects</h2>
+            <p class="section-subtitle">See how we've helped businesses succeed</p>
+        </div>
+        
+        <div class="row">
+            {% for project in featured_projects %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card project-card h-100 border-0">
+                    <div class="position-relative overflow-hidden">
+                        <img src="{{ project.main_image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 220px; object-fit: cover;">
+                        <div class="project-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                            <a href="{% url 'project_detail' project.slug %}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.title }}</h5>
+                        <p class="card-text text-muted">{{ project.short_description }}</p>
+                        <div class="project-meta">
+                            <span class="badge bg-primary">{{ project.get_category_display }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default projects when none are available -->
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card project-card h-100 border-0">
+                    <div class="position-relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="card-img-top" alt="E-commerce Platform" style="height: 220px; object-fit: cover;">
+                        <div class="project-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                            <a href="{% url 'project_list' %}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">E-commerce Platform</h5>
+                        <p class="card-text text-muted">Custom online store with advanced inventory management and payment processing.</p>
+                        <div class="project-meta">
+                            <span class="badge bg-primary">Web Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card project-card h-100 border-0">
+                    <div class="position-relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="card-img-top" alt="Mobile Banking App" style="height: 220px; object-fit: cover;">
+                        <div class="project-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                            <a href="{% url 'project_list' %}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Mobile Banking App</h5>
+                        <p class="card-text text-muted">Secure mobile banking application with biometric authentication and real-time transactions.</p>
+                        <div class="project-meta">
+                            <span class="badge bg-primary">Mobile Development</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card project-card h-100 border-0">
+                    <div class="position-relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" class="card-img-top" alt="Business Analytics Dashboard" style="height: 220px; object-fit: cover;">
+                        <div class="project-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                            <a href="{% url 'project_list' %}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Business Analytics Dashboard</h5>
+                        <p class="card-text text-muted">Real-time data visualization and analytics platform for business intelligence.</p>
+                        <div class="project-meta">
+                            <span class="badge bg-primary">Data Analytics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'project_list' %}" class="btn btn-primary btn-lg">View All Projects</a>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title center">Industry Recognition</h2>
+            <p class="section-subtitle">What technology leaders say about innovation</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card testimonial-card h-100 border-0">
+                    <div class="card-body p-4">
+                        <div class="company-logo mb-3">
+                            <i class="fab fa-apple fa-2x text-muted"></i>
+                        </div>
+                        <p class="card-text mb-4">"Innovation distinguishes between a leader and a follower. The work AutoMex is doing in digital transformation exemplifies true innovation in our industry."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">Steve Jobs</h6>
+                                <p class="text-muted mb-0">Co-founder, Apple</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card testimonial-card h-100 border-0">
+                    <div class="card-body p-4">
+                        <div class="company-logo mb-3">
+                            <i class="fab fa-microsoft fa-2x text-primary"></i>
+                        </div>
+                        <p class="card-text mb-4">"Technology is just a tool. In terms of getting the kids working together and motivating them, the approach AutoMex takes is the most important."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">Bill Gates</h6>
+                                <p class="text-muted mb-0">Co-founder, Microsoft</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card testimonial-card h-100 border-0">
+                    <div class="card-body p-4">
+                        <div class="company-logo mb-3">
+                            <i class="fab fa-google fa-2x text-success"></i>
+                        </div>
+                        <p class="card-text mb-4">"The science of today is the technology of tomorrow. AutoMex understands that true progress comes from bridging this gap between research and implementation."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">Sundar Pichai</h6>
+                                <p class="text-muted mb-0">CEO, Google & Alphabet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Second Row -->
+        <div class="row mt-4">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card testimonial-card h-100 border-0">
+                    <div class="card-body p-4">
+                        <div class="company-logo mb-3">
+                            <i class="fab fa-amazon fa-2x text-warning"></i>
+                        </div>
+                        <p class="card-text mb-4">"If you double the number of experiments you do per year, you're going to double your inventiveness. AutoMex's agile approach embodies this principle perfectly."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">Jeff Bezos</h6>
+                                <p class="text-muted mb-0">Founder, Amazon</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card testimonial-card h-100 border-0">
+                    <div class="card-body p-4">
+                        <div class="company-logo mb-3">
+                            <i class="fab fa-tesla fa-2x text-danger"></i>
+                        </div>
+                        <p class="card-text mb-4">"When something is important enough, you do it even if the odds are not in your favor. AutoMex demonstrates this courage in tackling complex digital challenges."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">Elon Musk</h6>
+                                <p class="text-muted mb-0">CEO, Tesla & SpaceX</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card testimonial-card h-100 border-0">
+                    <div class="card-body p-4">
+                        <div class="company-logo mb-3">
+                            <i class="fas fa-brain fa-2x text-info"></i>
+                        </div>
+                        <p class="card-text mb-4">"The development of full artificial intelligence could spell the end of the human race. Companies like AutoMex ensure we develop AI responsibly and ethically."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="mb-1">Stephen Hawking</h6>
+                                <p class="text-muted mb-0">Theoretical Physicist</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="mb-3">Ready to Transform Your Business?</h3>
+                <p class="mb-0">Let's discuss how AutoMex can help you achieve your business goals.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{% url 'contact' %}" class="btn btn-light btn-lg">Get Free Consultation</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Enhanced Hero Section Styles */
+    .hero-section {
+        padding: 100px 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-text-container {
+        position: relative;
+        z-index: 2;
+    }
+
+    .hero-main-text {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 1s ease-out 0.3s forwards;
+        font-size: 3.5rem;
+        line-height: 1.2;
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .hero-sub-text {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 1s ease-out 0.6s forwards;
+        font-size: 1.3rem;
+        color: #4b5563;
+        line-height: 1.6;
+        margin-bottom: 2rem !important;
+    }
+
+    .hero-buttons {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 1s ease-out 0.9s forwards;
+    }
+
+    .hero-btn-1 {
+        opacity: 0;
+        transform: translateX(-20px);
+        animation: fadeInLeft 0.8s ease-out 1.1s forwards;
+    }
+
+    .hero-btn-2 {
+        opacity: 0;
+        transform: translateX(20px);
+        animation: fadeInRight 0.8s ease-out 1.1s forwards;
+    }
+
+    .hero-image {
+        opacity: 0;
+        transform: scale(0.9) translateX(30px);
+        animation: fadeInScale 1.2s ease-out 0.5s forwards;
+    }
+
+    .floating-element {
+        opacity: 0;
+        animation: floatIn 1s ease-out forwards;
+    }
+
+    .floating-1 {
+        animation-delay: 1.4s;
+    }
+
+    .floating-2 {
+        animation-delay: 1.6s;
+    }
+
+    /* Custom Animations */
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInLeft {
+        0% {
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeInRight {
+        0% {
+            opacity: 0;
+            transform: translateX(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeInScale {
+        0% {
+            opacity: 0;
+            transform: scale(0.9) translateX(30px);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1) translateX(0);
+        }
+    }
+
+    @keyframes floatIn {
+        0% {
+            opacity: 0;
+            transform: translateY(20px) scale(0.8);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    /* Floating elements animation */
+    .floating-element {
+        position: absolute;
+        animation: floating 3s ease-in-out infinite;
+    }
+
+    .floating-1 {
+        top: 20%;
+        left: -20px;
+        animation-delay: 0s;
+    }
+
+    .floating-2 {
+        bottom: 30%;
+        right: -20px;
+        animation-delay: 1.5s;
+    }
+
+    @keyframes floating {
+        0%, 100% {
+            transform: translateY(0) rotate(0deg);
+        }
+        50% {
+            transform: translateY(-10px) rotate(2deg);
+        }
+    }
+
+    /* Rest of your existing styles */
+    .service-icon {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: rgba(37, 99, 235, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .project-overlay {
+        background: rgba(37, 99, 235, 0.9);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .project-card:hover .project-overlay {
+        opacity: 1;
+    }
+
+    /* Enhanced Clients Section Styles */
+    .clients-section {
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        padding: 80px 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .client-logo-scroll {
+        display: flex;
+        animation: scroll 40s linear infinite;
+        padding: 20px 0;
+        gap: 40px;
+    }
+
+    .client-logo-item {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 200px;
+    }
+
+    .client-logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 25px;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        transition: all 0.4s ease;
+        height: 140px;
+        width: 220px;
+        border: 1px solid #f1f5f9;
+    }
+
+    .client-logo-container img {
+        max-height: 80px;
+        max-width: 180px;
+        object-fit: contain;
+        transition: all 0.4s ease;
+        filter: none;
+        opacity: 1;
+    }
+
+    .client-logo-item:hover .client-logo-container {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+        border-color: var(--primary-color);
+    }
+
+    .client-logo-item:hover .client-logo-container img {
+        filter: none;
+        opacity: 1;
+        transform: scale(1.1);
+    }
+
+    .client-placeholder {
+        width: 220px;
+        height: 140px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.4s ease;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        border: 1px solid #f1f5f9;
+        padding: 25px;
+    }
+
+    .client-placeholder:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+        border-color: var(--primary-color);
+    }
+
+    .client-placeholder i {
+        margin-bottom: 12px;
+        opacity: 0.7;
+        transition: all 0.4s ease;
+    }
+
+    .client-placeholder:hover i {
+        opacity: 1;
+        transform: scale(1.1);
+        color: var(--primary-color);
+    }
+
+    .client-placeholder p {
+        font-weight: 600;
+        color: var(--dark-color);
+        font-size: 0.9rem;
+    }
+
+    /* Testimonial Card Styles */
+    .testimonial-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        background: white;
+    }
+    
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .company-logo {
+        text-align: center;
+        padding: 15px 0;
+    }
+    
+    .testimonial-card .card-text {
+        font-style: italic;
+        line-height: 1.6;
+        color: #555;
+        position: relative;
+    }
+    
+    .testimonial-card .card-text::before {
+        content: '"';
+        font-size: 3rem;
+        color: var(--primary-color);
+        opacity: 0.2;
+        position: absolute;
+        top: -15px;
+        left: -5px;
+        font-family: Georgia, serif;
+    }
+    
+    .section-title {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+    
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: var(--primary-color);
+    }
+    
+    .section-subtitle {
+        color: #6c757d;
+        font-size: 1.1rem;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    /* Smooth scrolling animation */
+    @keyframes scroll {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(calc(-200px * 10 - 40px * 10)); }
+    }
+
+    /* Pause animation on hover */
+    .client-logo-scroll:hover {
+        animation-play-state: paused;
+    }
+
+    /* Gradient overlays for seamless loop */
+    .clients-section::before,
+    .clients-section::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 200px;
+        height: 100%;
+        z-index: 2;
+    }
+
+    .clients-section::before {
+        left: 0;
+        background: linear-gradient(90deg, rgba(248,250,252,1) 0%, rgba(248,250,252,0) 100%);
+    }
+
+    .clients-section::after {
+        right: 0;
+        background: linear-gradient(90deg, rgba(248,250,252,0) 0%, rgba(248,250,252,1) 100%);
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .hero-main-text {
+            font-size: 2.5rem;
+        }
+        
+        .hero-sub-text {
+            font-size: 1.1rem;
+        }
+        
+        .client-logo-item {
+            min-width: 160px;
+        }
+        
+        .client-logo-container,
+        .client-placeholder {
+            width: 180px;
+            height: 120px;
+            padding: 20px;
+        }
+        
+        .client-logo-container img {
+            max-height: 60px;
+            max-width: 140px;
+        }
+        
+        .clients-section::before,
+        .clients-section::after {
+            width: 80px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero-main-text {
+            font-size: 2rem;
+        }
+        
+        .hero-sub-text {
+            font-size: 1rem;
+        }
+        
+        .client-logo-item {
+            min-width: 140px;
+        }
+        
+        .client-logo-container,
+        .client-placeholder {
+            width: 160px;
+            height: 100px;
+            padding: 15px;
+        }
+        
+        .client-logo-container img {
+            max-height: 50px;
+            max-width: 120px;
+        }
+        
+        .client-placeholder i {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .client-placeholder p {
+            font-size: 0.8rem;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Enhanced hero section animations
+        const heroObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    // Trigger hero animations
+                    const heroText = document.querySelector('.hero-main-text');
+                    const heroSub = document.querySelector('.hero-sub-text');
+                    const heroButtons = document.querySelector('.hero-buttons');
+                    const heroImage = document.querySelector('.hero-image');
+                    
+                    // Reset animations
+                    heroText.style.animation = 'none';
+                    heroSub.style.animation = 'none';
+                    heroButtons.style.animation = 'none';
+                    heroImage.style.animation = 'none';
+                    
+                    setTimeout(() => {
+                        heroText.style.animation = 'fadeInUp 1s ease-out 0.3s forwards';
+                        heroSub.style.animation = 'fadeInUp 1s ease-out 0.6s forwards';
+                        heroButtons.style.animation = 'fadeInUp 1s ease-out 0.9s forwards';
+                        heroImage.style.animation = 'fadeInScale 1.2s ease-out 0.5s forwards';
+                    }, 50);
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        const heroSection = document.querySelector('.hero-section');
+        if (heroSection) {
+            heroObserver.observe(heroSection);
+        }
+
+        // Animate other elements on scroll
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.service-card, .project-card, .stat-item, .testimonial-card').forEach(function(el) {
+            observer.observe(el);
+        });
+
+        // Enhanced client logo scrolling
+        function initClientScrolling() {
+            const clientScroll = document.getElementById('clientScroll');
+            if (clientScroll) {
+                // Duplicate content for seamless scrolling (creates 3 copies)
+                const originalContent = clientScroll.innerHTML;
+                clientScroll.innerHTML = originalContent + originalContent + originalContent;
+                
+                // Adjust animation duration based on content length
+                const items = clientScroll.querySelectorAll('.client-logo-item').length;
+                const duration = Math.max(30, items * 2); // Minimum 30s, scale with content
+                
+                clientScroll.style.animationDuration = duration + 's';
+                
+                // Reset animation when it completes for infinite loop
+                clientScroll.addEventListener('animationiteration', () => {
+                    // Smooth reset without visible jump
+                    clientScroll.style.animation = 'none';
+                    setTimeout(() => {
+                        clientScroll.style.animation = `scroll ${duration}s linear infinite`;
+                    }, 10);
+                });
+            }
+        }
+
+        initClientScrolling();
+        
+        // Add hover effects
+        const clientItems = document.querySelectorAll('.client-logo-item');
+        clientItems.forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.zIndex = '10';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.zIndex = '1';
+            });
+        });
+
+        // Add animation to testimonial cards
+        const testimonialObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry, index) {
+                if (entry.isIntersecting) {
+                    setTimeout(function() {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    }, index * 200);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('.testimonial-card').forEach(function(card) {
+            testimonialObserver.observe(card);
+        });
+    });
+</script>
+{% endblock %}

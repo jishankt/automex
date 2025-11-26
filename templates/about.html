@@ -1,0 +1,385 @@
+{% extends 'base.html' %}
+
+{% block title %}About Us - {% if company_info %}{{ company_info.name }}{% else %}AutoMex{% endif %}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="section-title">About AutoMex</h1>
+                <p class="section-subtitle">Driving business growth through innovative technology solutions</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Company Story -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="pe-lg-4">
+                    <span class="badge bg-primary mb-3">Our Journey</span>
+                    <h2 class="mb-4">Our Story</h2>
+                    {% if company_info %}
+                        {{ company_info.description|safe }}
+                    {% else %}
+                    <p class="lead">AutoMex was founded with a simple mission: to help businesses thrive in the digital age through innovative technology solutions and strategic consulting.</p>
+                    <p>We believe that every business, regardless of size, deserves access to cutting-edge technology and expert guidance to drive growth and success. Our commitment to excellence and innovation has helped numerous clients transform their operations and achieve remarkable results.</p>
+                    <p>Our team of experienced professionals brings together expertise in software development, digital transformation, business strategy, and technology consulting to deliver comprehensive solutions tailored to your unique needs.</p>
+                    <div class="mt-4">
+                        <div class="row">
+                            <div class="col-sm-6 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-check-circle text-primary"></i>
+                                    </div>
+                                    <span>2+ Years Experience</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-check-circle text-primary"></i>
+                                    </div>
+                                    <span>15+ Projects Delivered</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-check-circle text-primary"></i>
+                                    </div>
+                                    <span>12+ Happy Clients</span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                                <div class="d-flex align-items-center">
+                                    <div class="feature-icon me-3">
+                                        <i class="fas fa-check-circle text-primary"></i>
+                                    </div>
+                                    <span>24/7 Support</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="position-relative">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Our Team" class="img-fluid rounded-3 shadow-lg">
+                    <div class="experience-badge bg-primary text-white p-3 rounded-3 shadow position-absolute bottom-0 start-0 m-4">
+                        <h4 class="mb-0">2+ Years</h4>
+                        <p class="mb-0">Of Excellence</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission & Vision -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100 text-center border-0 shadow-sm mission-vision-card">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="icon-wrapper bg-primary text-white rounded-circle mx-auto mb-4">
+                            <i class="fas fa-bullseye fa-2x"></i>
+                        </div>
+                        <h3 class="mb-3">Our Mission</h3>
+                        <p class="text-muted">To empower businesses with innovative technology solutions that drive growth, efficiency, and competitive advantage in the digital landscape. We strive to be the catalyst that transforms your business challenges into opportunities for success.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="card h-100 text-center border-0 shadow-sm mission-vision-card">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="icon-wrapper bg-primary text-white rounded-circle mx-auto mb-4">
+                            <i class="fas fa-eye fa-2x"></i>
+                        </div>
+                        <h3 class="mb-3">Our Vision</h3>
+                        <p class="text-muted">To be the leading partner for businesses seeking digital transformation and sustainable growth through technology innovation. We envision a future where every business can leverage technology to achieve its full potential.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">15+</h3>
+                    <p class="text-muted mb-0">Projects Completed</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">12+</h3>
+                    <p class="text-muted mb-0">Happy Clients</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">2+</h3>
+                    <p class="text-muted mb-0">Years Experience</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">24/7</h3>
+                    <p class="text-muted mb-0">Support</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Our Values</h2>
+            <p class="section-subtitle">The principles that guide everything we do</p>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 text-center border-0 shadow-sm value-card">
+                    <div class="card-body p-4">
+                        <div class="icon-wrapper bg-primary text-white rounded-circle mx-auto mb-4">
+                            <i class="fas fa-lightbulb fa-2x"></i>
+                        </div>
+                        <h4 class="mb-3">Innovation</h4>
+                        <p class="text-muted">We constantly explore new technologies and approaches to deliver cutting-edge solutions that keep our clients ahead of the competition.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 text-center border-0 shadow-sm value-card">
+                    <div class="card-body p-4">
+                        <div class="icon-wrapper bg-primary text-white rounded-circle mx-auto mb-4">
+                            <i class="fas fa-handshake fa-2x"></i>
+                        </div>
+                        <h4 class="mb-3">Partnership</h4>
+                        <p class="text-muted">We work closely with our clients as strategic partners, not just service providers, building long-term relationships based on trust.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 text-center border-0 shadow-sm value-card">
+                    <div class="card-body p-4">
+                        <div class="icon-wrapper bg-primary text-white rounded-circle mx-auto mb-4">
+                            <i class="fas fa-chart-line fa-2x"></i>
+                        </div>
+                        <h4 class="mb-3">Results-Driven</h4>
+                        <p class="text-muted">We focus on delivering measurable results and tangible business value, ensuring every project contributes to our clients' success.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 text-center border-0 shadow-sm value-card">
+                    <div class="card-body p-4">
+                        <div class="icon-wrapper bg-primary text-white rounded-circle mx-auto mb-4">
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                        <h4 class="mb-3">Collaboration</h4>
+                        <p class="text-muted">We believe in the power of teamwork and open communication, both within our team and with our clients.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 text-center border-0 shadow-sm value-card">
+                    <div class="card-body p-4">
+                        <div class="icon-wrapper bg-primary text-white rounded-circle mx-auto mb-4">
+                            <i class="fas fa-shield-alt fa-2x"></i>
+                        </div>
+                        <h4 class="mb-3">Integrity</h4>
+                        <p class="text-muted">We maintain the highest ethical standards in all our interactions, ensuring transparency and honesty in everything we do.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 text-center border-0 shadow-sm value-card">
+                    <div class="card-body p-4">
+                        <div class="icon-wrapper bg-primary text-white rounded-circle mx-auto mb-4">
+                            <i class="fas fa-graduation-cap fa-2x"></i>
+                        </div>
+                        <h4 class="mb-3">Excellence</h4>
+                        <p class="text-muted">We are committed to delivering exceptional quality in every project, continuously improving our skills and processes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">Meet Our Team</h2>
+            <p class="section-subtitle">The experts behind your success</p>
+        </div>
+        
+        <div class="row">
+            {% for member in team_members %}
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card team-card h-100 text-center border-0 shadow-sm">
+                    <div class="team-image-container position-relative overflow-hidden">
+                        <img src="{{ member.photo.url }}" class="card-img-top" alt="{{ member.name }}" style="height: 250px; object-fit: cover;">
+                        <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                            <div class="social-links">
+                                {% if member.linkedin %}
+                                <a href="{{ member.linkedin }}" class="social-link mx-1">
+                                    <div class="icon-wrapper bg-primary text-white rounded-circle">
+                                        <i class="fab fa-linkedin-in"></i>
+                                    </div>
+                                </a>
+                                {% endif %}
+                                {% if member.twitter %}
+                                <a href="{{ member.twitter }}" class="social-link mx-1">
+                                    <div class="icon-wrapper bg-primary text-white rounded-circle">
+                                        <i class="fab fa-twitter"></i>
+                                    </div>
+                                </a>
+                                {% endif %}
+                                {% if member.email %}
+                                <a href="mailto:{{ member.email }}" class="social-link mx-1">
+                                    <div class="icon-wrapper bg-primary text-white rounded-circle">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title mb-1">{{ member.name }}</h5>
+                        <p class="card-text text-primary mb-2">{{ member.position }}</p>
+                        <p class="card-text small text-muted">{{ member.bio|truncatewords:20 }}</p>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Default team members when none are available -->
+         
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="mb-3">Ready to Work With Our Team?</h3>
+                <p class="mb-0">Let's discuss how AutoMex can help you achieve your business goals.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{% url 'contact' %}" class="btn btn-light btn-lg">Get In Touch</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .icon-wrapper {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .feature-icon {
+        color: var(--primary-color);
+        font-size: 1.2rem;
+    }
+    
+    .experience-badge {
+        max-width: 150px;
+    }
+    
+    .mission-vision-card,
+    .value-card {
+        transition: transform 0.3s ease;
+    }
+    
+    .mission-vision-card:hover,
+    .value-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .team-image-container {
+        position: relative;
+    }
+    
+    .team-overlay {
+        background: rgba(37, 99, 235, 0.9);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .team-card:hover .team-overlay {
+        opacity: 1;
+    }
+    
+    .social-link .icon-wrapper {
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s ease;
+    }
+    
+    .social-link:hover .icon-wrapper {
+        transform: scale(1.1);
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Animate team cards on scroll
+        const teamCards = document.querySelectorAll('.team-card');
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry, index) {
+                if (entry.isIntersecting) {
+                    setTimeout(function() {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    }, index * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        teamCards.forEach(function(card) {
+            observer.observe(card);
+        });
+        
+        // Animate stats counting
+        const statItems = document.querySelectorAll('.stat-item h3');
+        statItems.forEach(function(stat) {
+            const target = parseInt(stat.textContent);
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(function() {
+                current += increment;
+                if (current >= target) {
+                    stat.textContent = target + (stat.textContent.includes('+') ? '+' : '');
+                    clearInterval(timer);
+                } else {
+                    stat.textContent = Math.floor(current) + (stat.textContent.includes('+') ? '+' : '');
+                }
+            }, 30);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,298 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Projects - {% if company_info %}{{ company_info.name }}{% else %}AutoMex{% endif %}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="section-title">Our Projects</h1>
+                <p class="section-subtitle">See how we've helped businesses succeed through innovative solutions</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Filter & Search -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Filter by Category</label>
+                                <div class="filter-buttons">
+                                    <a href="{% url 'project_list' %}" class="btn btn-sm {% if not selected_category %}btn-primary{% else %}btn-outline-primary{% endif %} me-2 mb-2">
+                                        All Projects
+                                    </a>
+                                    {% for category in categories %}
+                                    <a href="{% url 'project_list' %}?category={{ category.0 }}" class="btn btn-sm {% if selected_category == category.0 %}btn-primary{% else %}btn-outline-primary{% endif %} me-2 mb-2">
+                                        {{ category.1 }}
+                                    </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Search Projects</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search projects..." id="projectSearch">
+                                    <button class="btn btn-outline-primary" type="button">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <div class="projects-stats">
+                            <h3 class="text-primary mb-1">{{ projects|length }}</h3>
+                            <p class="text-muted mb-0">Projects{% if selected_category %} in {{ selected_category }}{% endif %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="py-5">
+    <div class="container">
+        {% if projects %}
+        <div class="row" id="projectsGrid">
+            {% for project in projects %}
+            <div class="col-lg-4 col-md-6 mb-4 project-item" data-category="{{ project.category }}" data-title="{{ project.title|lower }}">
+                <div class="card project-card h-100 border-0 shadow-sm">
+                    {% if project.is_featured %}
+                    <div class="featured-ribbon">
+                        <span class="ribbon-text">Featured</span>
+                    </div>
+                    {% endif %}
+                    <div class="project-image-container position-relative overflow-hidden">
+                        <img src="{{ project.main_image.url }}" class="card-img-top" alt="{{ project.title }}" style="height: 220px; object-fit: cover;">
+                        <div class="project-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                            <div class="overlay-content">
+                                <a href="{% url 'project_detail' project.slug %}" class="btn btn-primary btn-sm me-2">
+                                    <i class="fas fa-eye me-1"></i>View Details
+                                </a>
+                                {% if project.project_url %}
+                                <a href="{{ project.project_url }}" target="_blank" class="btn btn-light btn-sm">
+                                    <i class="fas fa-external-link-alt me-1"></i>Live Demo
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="project-meta mb-2">
+                            <span class="badge bg-primary">{{ project.get_category_display }}</span>
+                            <small class="text-muted ms-2"><i class="fas fa-calendar me-1"></i>{{ project.start_date|date:"M Y" }}</small>
+                        </div>
+                        <h5 class="card-title mb-3">{{ project.title }}</h5>
+                        <p class="card-text text-muted">{{ project.short_description }}</p>
+                        
+                        {% if project.tags.all %}
+                        <div class="project-tags mt-3">
+                            {% for tag in project.tags.all|slice:":3" %}
+                            <span class="badge bg-light text-dark border me-1 mb-1">{{ tag.name }}</span>
+                            {% endfor %}
+                            {% if project.tags.count > 3 %}
+                            <span class="badge bg-light text-dark border">+{{ project.tags.count|add:"-3" }} more</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="card-footer bg-transparent border-0 pt-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'project_detail' project.slug %}" class="btn btn-outline-primary btn-sm">
+                                Read Case Study
+                            </a>
+                            <small class="text-muted">
+                                <i class="fas fa-clock me-1"></i>
+                                {% if project.end_date %}
+                                {{ project.start_date|timesince:project.end_date }}
+                                {% else %}
+                                Ongoing
+                                {% endif %}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <!-- Empty State -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center py-5">
+                        <div class="empty-state-icon mb-4">
+                            <i class="fas fa-folder-open fa-4x text-muted"></i>
+                        </div>
+                        <h3 class="mb-3">
+                            {% if selected_category %}
+                            No Projects in {{ selected_category }}
+                            {% else %}
+                            Project Portfolio Coming Soon
+                            {% endif %}
+                        </h3>
+                        <p class="text-muted mb-4">
+                            {% if selected_category %}
+                            We haven't added any projects to this category yet. Check back soon or browse all our projects.
+                            {% else %}
+                            We're currently working on amazing projects for our clients. Our portfolio will be updated soon with our latest work.
+                            {% endif %}
+                        </p>
+                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                            {% if selected_category %}
+                            <a href="{% url 'project_list' %}" class="btn btn-primary">
+                                <i class="fas fa-arrow-left me-2"></i>View All Projects
+                            </a>
+                            {% endif %}
+                            <a href="{% url 'contact' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-paper-plane me-2"></i>Start Your Project
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="mb-3">Have a Project in Mind?</h3>
+                <p class="mb-0">Let's discuss how we can help bring your vision to life.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{% url 'contact' %}" class="btn btn-light btn-lg">Start a Project</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .project-card {
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    .project-image-container {
+        position: relative;
+    }
+    
+    .project-overlay {
+        background: rgba(37, 99, 235, 0.9);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .project-card:hover .project-overlay {
+        opacity: 1;
+    }
+    
+    .overlay-content {
+        transform: translateY(20px);
+        transition: transform 0.3s ease;
+    }
+    
+    .project-card:hover .overlay-content {
+        transform: translateY(0);
+    }
+    
+    .featured-ribbon {
+        position: absolute;
+        top: 15px;
+        right: -30px;
+        background: var(--primary-color);
+        color: white;
+        padding: 5px 30px;
+        transform: rotate(45deg);
+        z-index: 2;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    .ribbon-text {
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    
+    .empty-state-icon {
+        opacity: 0.7;
+    }
+    
+    .projects-stats h3 {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+    
+    .filter-buttons {
+        display: flex;
+        flex-wrap: wrap;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Project search functionality
+        const searchInput = document.getElementById('projectSearch');
+        const projectItems = document.querySelectorAll('.project-item');
+        
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase().trim();
+                
+                projectItems.forEach(item => {
+                    const projectTitle = item.getAttribute('data-title');
+                    const projectCategory = item.getAttribute('data-category');
+                    
+                    if (projectTitle.includes(searchTerm) || projectCategory.includes(searchTerm)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                // Update project count
+                const visibleProjects = document.querySelectorAll('.project-item[style="display: block"]').length;
+                const totalProjects = projectItems.length;
+                document.querySelector('.projects-stats h3').textContent = searchTerm ? visibleProjects : totalProjects;
+            });
+        }
+        
+        // Add animation to project cards on scroll
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry, index) {
+                if (entry.isIntersecting) {
+                    setTimeout(function() {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    }, index * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        projectItems.forEach(function(item) {
+            observer.observe(item);
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,407 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog - {% if company_info %}{{ company_info.name }}{% else %}AutoMex{% endif %}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="section-title">Our Blog</h1>
+                <p class="section-subtitle">Insights, news, and updates from AutoMex</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Blog Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <!-- Main Content -->
+            <div class="col-lg-8">
+                <!-- Search and Filter -->
+                <div class="card border-0 shadow-sm mb-5">
+                    <div class="card-body p-4">
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Search Posts</label>
+                                <div class="input-group">
+                                    <input type="text" name="q" class="form-control" placeholder="Search articles..." value="{{ query }}" id="searchInput">
+                                    <button class="btn btn-primary" type="button" id="searchButton">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-semibold">Filter by Category</label>
+                                <select name="category" class="form-select" id="categorySelect">
+                                    <option value="">All Categories</option>
+                                    {% for category in categories %}
+                                    <option value="{{ category.slug }}" {% if selected_category == category.slug %}selected{% endif %}>
+                                        {{ category.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="button" class="btn btn-outline-primary w-100" id="resetFilters">
+                                    <i class="fas fa-refresh me-1"></i>Reset
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Posts Grid -->
+                <div class="row" id="blogPosts">
+                    {% for post in posts %}
+                    <div class="col-12 mb-4">
+                        <div class="card blog-card border-0 shadow-sm h-100">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <div class="post-image-container position-relative h-100">
+                                        {% if post.image %}
+                                        <img src="{{ post.image.url }}" class="img-fluid rounded-start h-100 w-100" alt="{{ post.title }}" style="object-fit: cover; min-height: 200px;">
+                                        {% else %}
+                                        <div class="bg-light rounded-start h-100 w-100 d-flex align-items-center justify-content-center">
+                                            <i class="fas fa-image fa-2x text-muted"></i>
+                                        </div>
+                                        {% endif %}
+                                        <div class="post-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
+                                            <a href="{% url 'post_detail' post.slug %}" class="btn btn-primary btn-sm">
+                                                <i class="fas fa-eye me-1"></i>Read Article
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body d-flex flex-column h-100">
+                                        <div class="post-meta mb-2">
+                                            <span class="text-muted small">
+                                                <i class="fas fa-calendar me-1"></i> {{ post.created_at|date:"F j, Y" }}
+                                                <i class="fas fa-user ms-2 me-1"></i> {{ post.author.get_full_name|default:post.author.username }}
+                                                {% if post.category %}
+                                                <i class="fas fa-folder ms-2 me-1"></i> 
+                                                <a href="{% url 'post_list' %}?category={{ post.category.slug }}" class="text-muted text-decoration-none">
+                                                    {{ post.category.name }}
+                                                </a>
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                        
+                                        <h5 class="card-title mb-3">
+                                            <a href="{% url 'post_detail' post.slug %}" class="text-decoration-none text-dark">
+                                                {{ post.title }}
+                                            </a>
+                                        </h5>
+                                        
+                                        <p class="card-text text-muted flex-grow-1">
+                                            {{ post.excerpt|default:post.content|striptags|truncatewords:30 }}
+                                        </p>
+                                        
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <a href="{% url 'post_detail' post.slug %}" class="btn btn-outline-primary btn-sm">
+                                                Read More <i class="fas fa-arrow-right ms-1"></i>
+                                            </a>
+                                            
+                                            {% if post.tags.all %}
+                                            <div class="post-tags">
+                                                {% for tag in post.tags.all|slice:":2" %}
+                                                <span class="badge bg-light text-dark border small me-1">{{ tag.name }}</span>
+                                                {% endfor %}
+                                                {% if post.tags.count > 2 %}
+                                                <span class="badge bg-light text-dark border small">+{{ post.tags.count|add:"-2" }}</span>
+                                                {% endif %}
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <!-- Empty State -->
+                    <div class="col-12">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body text-center py-5">
+                                <div class="empty-state-icon mb-4">
+                                    <i class="fas fa-newspaper fa-4x text-muted"></i>
+                                </div>
+                                <h3 class="mb-3">
+                                    {% if query %}
+                                    No Posts Found
+                                    {% elif selected_category %}
+                                    No Posts in This Category
+                                    {% else %}
+                                    Blog Coming Soon
+                                    {% endif %}
+                                </h3>
+                                <p class="text-muted mb-4">
+                                    {% if query %}
+                                    No posts matching "{{ query }}" were found. Try different keywords or browse all posts.
+                                    {% elif selected_category %}
+                                    We haven't published any posts in this category yet. Check back soon for new content!
+                                    {% else %}
+                                    We're currently working on creating valuable content for our blog. Stay tuned for insightful articles and updates.
+                                    {% endif %}
+                                </p>
+                                <div class="d-flex justify-content-center gap-3">
+                                    {% if query or selected_category %}
+                                    <a href="{% url 'post_list' %}" class="btn btn-primary">
+                                        <i class="fas fa-arrow-left me-2"></i>View All Posts
+                                    </a>
+                                    {% endif %}
+                                    <a href="{% url 'contact' %}" class="btn btn-outline-primary">
+                                        <i class="fas fa-envelope me-2"></i>Get Updates
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-lg-4">
+                <!-- Categories Widget -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">
+                            <i class="fas fa-folder me-2 text-primary"></i>Categories
+                        </h5>
+                        <div class="categories-list">
+                            <a href="{% url 'post_list' %}" class="category-item d-flex justify-content-between align-items-center py-2 text-decoration-none {% if not selected_category %}active{% endif %}">
+                                <span class="{% if not selected_category %}text-primary fw-semibold{% else %}text-muted{% endif %}">
+                                    All Categories
+                                </span>
+                                <span class="badge bg-light text-dark">{{ total_posts }}</span>
+                            </a>
+                            {% for category in categories %}
+                            <a href="{% url 'post_list' %}?category={{ category.slug }}" class="category-item d-flex justify-content-between align-items-center py-2 text-decoration-none {% if selected_category == category.slug %}active{% endif %}">
+                                <span class="{% if selected_category == category.slug %}text-primary fw-semibold{% else %}text-muted{% endif %}">
+                                    {{ category.name }}
+                                </span>
+                                <span class="badge bg-light text-dark">{{ category.post_count }}</span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Posts Widget -->
+                {% if featured_posts %}
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">
+                            <i class="fas fa-star me-2 text-primary"></i>Featured Posts
+                        </h5>
+                        <div class="featured-posts">
+                            {% for post in featured_posts %}
+                            <a href="{% url 'post_detail' post.slug %}" class="featured-post-item d-flex align-items-center mb-3 text-decoration-none">
+                                <div class="flex-shrink-0">
+                                    {% if post.image %}
+                                    <img src="{{ post.image.url }}" class="rounded me-3" alt="{{ post.title }}" style="width: 60px; height: 60px; object-fit: cover;">
+                                    {% else %}
+                                    <div class="bg-light rounded me-3 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                        <i class="fas fa-image text-muted"></i>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1 text-dark">{{ post.title }}</h6>
+                                    <small class="text-muted">{{ post.created_at|date:"M j, Y" }}</small>
+                                </div>
+                            </a>
+                            {% if not forloop.last %}
+                            <hr class="my-3">
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Popular Tags Widget -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">
+                            <i class="fas fa-tags me-2 text-primary"></i>Popular Tags
+                        </h5>
+                        <div class="tags-cloud">
+                            {% for tag in popular_tags %}
+                            <a href="{% url 'post_list' %}?tag={{ tag.slug }}" class="tag-item badge bg-light text-dark border text-decoration-none me-1 mb-2">
+                                #{{ tag.name }}
+                            </a>
+                            {% empty %}
+                            <p class="text-muted small mb-0">No tags available yet.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter Widget -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center">
+                        <div class="newsletter-icon mb-3">
+                            <i class="fas fa-envelope-open-text fa-2x text-primary"></i>
+                        </div>
+                        <h5 class="card-title">Stay Updated</h5>
+                        <p class="card-text text-muted small mb-3">
+                            Get the latest articles and news delivered to your inbox.
+                        </p>
+                        <form class="newsletter-form">
+                            <div class="mb-3">
+                                <input type="email" class="form-control" placeholder="Enter your email" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-paper-plane me-2"></i>Subscribe
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .blog-card {
+        transition: all 0.3s ease;
+    }
+    
+    .blog-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    .post-image-container {
+        position: relative;
+    }
+    
+    .post-overlay {
+        background: rgba(37, 99, 235, 0.9);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .blog-card:hover .post-overlay {
+        opacity: 1;
+    }
+    
+    .category-item {
+        transition: all 0.3s ease;
+        border-radius: 6px;
+        padding: 8px 12px;
+    }
+    
+    .category-item:hover {
+        background: rgba(37, 99, 235, 0.05);
+        color: var(--primary-color) !important;
+    }
+    
+    .category-item.active {
+        background: rgba(37, 99, 235, 0.1);
+        color: var(--primary-color) !important;
+    }
+    
+    .featured-post-item {
+        transition: all 0.3s ease;
+        padding: 8px;
+        border-radius: 8px;
+    }
+    
+    .featured-post-item:hover {
+        background: rgba(37, 99, 235, 0.05);
+        transform: translateX(5px);
+    }
+    
+    .tag-item {
+        transition: all 0.3s ease;
+        padding: 6px 12px;
+    }
+    
+    .tag-item:hover {
+        background: var(--primary-color) !important;
+        color: white !important;
+        transform: translateY(-2px);
+    }
+    
+    .empty-state-icon {
+        opacity: 0.7;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Auto-submit form when search input changes
+        const searchInput = document.getElementById('searchInput');
+        const categorySelect = document.getElementById('categorySelect');
+        
+        if (searchInput) {
+            let searchTimeout;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    this.form.submit();
+                }, 500);
+            });
+        }
+        
+        if (categorySelect) {
+            categorySelect.addEventListener('change', function() {
+                this.form.submit();
+            });
+        }
+        
+        // Reset filters
+        const resetButton = document.getElementById('resetFilters');
+        if (resetButton) {
+            resetButton.addEventListener('click', function() {
+                window.location.href = "{% url 'post_list' %}";
+            });
+        }
+        
+        // Newsletter form handling
+        const newsletterForms = document.querySelectorAll('.newsletter-form');
+        newsletterForms.forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const input = this.querySelector('input[type="email"]');
+                const button = this.querySelector('button[type="submit"]');
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Subscribing...';
+                button.disabled = true;
+                
+                // Simulate subscription
+                setTimeout(() => {
+                    alert('Thank you for subscribing to our newsletter!');
+                    input.value = '';
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 1500);
+            });
+        });
+        
+        // Add animation to blog cards on scroll
+        const blogCards = document.querySelectorAll('.blog-card');
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry, index) {
+                if (entry.isIntersecting) {
+                    setTimeout(function() {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    }, index * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        blogCards.forEach(function(card) {
+            observer.observe(card);
+        });
+    });
+</script>
+{% endblock %}

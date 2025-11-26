@@ -1,0 +1,339 @@
+{% extends 'base.html' %}
+
+{% block title %}Our Clients - {% if company_info %}{{ company_info.name }}{% else %}AutoMex{% endif %}{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h1 class="section-title">Our Valued Clients</h1>
+                <p class="section-subtitle">Trusted by innovative businesses worldwide</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Clients Stats -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">{{ clients|length }}+</h3>
+                    <p class="text-muted mb-0">Happy Clients</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">15+</h3>
+                    <p class="text-muted mb-0">Projects Delivered</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">98%</h3>
+                    <p class="text-muted mb-0">Client Satisfaction</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item">
+                    <h3 class="display-4 text-primary fw-bold mb-2">2+</h3>
+                    <p class="text-muted mb-0">Years Partnership</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Clients Grid -->
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title">Our Client Portfolio</h2>
+                <p class="section-subtitle">We're proud to partner with industry leaders and innovative startups</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for client in clients %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="card client-card border-0 shadow-sm h-100 text-center">
+                    <div class="card-body d-flex align-items-center justify-content-center p-4">
+                        {% if client.logo %}
+                        <div class="client-logo-container">
+                            <img src="{{ client.logo.url }}" class="img-fluid client-logo" alt="{{ client.name }}" style="max-height: 80px; max-width: 100%;">
+                        </div>
+                        {% else %}
+                        <div class="client-placeholder text-center">
+                            <div class="placeholder-icon bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+                                <i class="fas fa-building fa-lg"></i>
+                            </div>
+                            <h6 class="mb-2">{{ client.name }}</h6>
+                            {% if client.industry %}
+                            <small class="text-muted">{{ client.industry }}</small>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% if client.website or client.description %}
+                    <div class="card-footer bg-transparent border-0 pt-0">
+                        <div class="client-actions">
+                            {% if client.website %}
+                            <a href="{{ client.website }}" target="_blank" class="btn btn-outline-primary btn-sm me-2">
+                                <i class="fas fa-external-link-alt me-1"></i>Website
+                            </a>
+                            {% endif %}
+                            {% if client.description %}
+                            <button class="btn btn-outline-secondary btn-sm client-details-btn" data-client="{{ client.name }}" data-description="{{ client.description }}">
+                                <i class="fas fa-info-circle me-1"></i>Details
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <!-- Empty State -->
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body text-center py-5">
+                        <div class="empty-state-icon mb-4">
+                            <i class="fas fa-handshake fa-4x text-muted"></i>
+                        </div>
+                        <h3 class="mb-3">Building Partnerships</h3>
+                        <p class="text-muted mb-4">
+                            We're currently working on amazing projects with our clients. Our client portfolio will be updated soon with our valued partnerships.
+                        </p>
+                        <div class="d-flex justify-content-center gap-3 flex-wrap">
+                            <a href="{% url 'project_list' %}" class="btn btn-primary">
+                                <i class="fas fa-briefcase me-2"></i>View Our Work
+                            </a>
+                            <a href="{% url 'contact' %}" class="btn btn-outline-primary">
+                                <i class="fas fa-rocket me-2"></i>Become a Client
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+{% if testimonials %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h2 class="section-title">Client Testimonials</h2>
+                <p class="section-subtitle">Hear what our clients say about working with us</p>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for testimonial in testimonials %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card testimonial-card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="testimonial-header mb-3">
+                            <div class="rating mb-2">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= testimonial.rating %}
+                                    <i class="fas fa-star text-warning"></i>
+                                    {% else %}
+                                    <i class="far fa-star text-warning"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="testimonial-quote">
+                                <i class="fas fa-quote-left fa-2x text-primary opacity-25"></i>
+                            </div>
+                        </div>
+                        <div class="testimonial-content">
+                            <p class="card-text">"{{ testimonial.content }}"</p>
+                        </div>
+                        <div class="testimonial-author mt-4">
+                            <div class="d-flex align-items-center">
+                                <div class="author-avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">{{ testimonial.author_name }}</h6>
+                                    <p class="text-muted mb-1 small">{{ testimonial.author_position }}</p>
+                                    {% if testimonial.client %}
+                                    <p class="text-muted small mb-0">{{ testimonial.client.name }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="py-5 bg-primary text-white">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <h3 class="mb-3">Ready to Join Our Success Stories?</h3>
+                <p class="mb-0">Become our next satisfied client and experience the AutoMex difference in technology solutions.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+                <a href="{% url 'contact' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-rocket me-2"></i>Start Your Project
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Client Details Modal -->
+<div class="modal fade" id="clientDetailsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="clientModalTitle">Client Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="clientModalDescription"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .client-card {
+        transition: all 0.3s ease;
+        padding: 20px 0;
+    }
+    
+    .client-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+    
+    .client-logo {
+        transition: transform 0.3s ease;
+        filter: grayscale(100%);
+        opacity: 0.7;
+    }
+    
+    .client-card:hover .client-logo {
+        filter: grayscale(0%);
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    
+    .placeholder-icon {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .client-actions {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .client-card:hover .client-actions {
+        opacity: 1;
+    }
+    
+    .testimonial-card {
+        transition: transform 0.3s ease;
+    }
+    
+    .testimonial-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .testimonial-quote {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        opacity: 0.1;
+    }
+    
+    .author-avatar {
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .empty-state-icon {
+        opacity: 0.7;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Client details modal
+        const clientDetailButtons = document.querySelectorAll('.client-details-btn');
+        const clientModal = new bootstrap.Modal(document.getElementById('clientDetailsModal'));
+        const clientModalTitle = document.getElementById('clientModalTitle');
+        const clientModalDescription = document.getElementById('clientModalDescription');
+        
+        clientDetailButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const clientName = this.getAttribute('data-client');
+                const clientDescription = this.getAttribute('data-description');
+                
+                clientModalTitle.textContent = clientName;
+                clientModalDescription.textContent = clientDescription;
+                clientModal.show();
+            });
+        });
+        
+        // Animate statistics counting
+        const statNumbers = document.querySelectorAll('.stat-item h3');
+        statNumbers.forEach(stat => {
+            const target = parseInt(stat.textContent);
+            let current = 0;
+            const increment = target / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    stat.textContent = target + (stat.textContent.includes('+') ? '+' : (stat.textContent.includes('%') ? '%' : ''));
+                    clearInterval(timer);
+                } else {
+                    stat.textContent = Math.floor(current) + (stat.textContent.includes('+') ? '+' : (stat.textContent.includes('%') ? '%' : ''));
+                }
+            }, 30);
+        });
+        
+        // Add animation to cards on scroll
+        const cards = document.querySelectorAll('.client-card, .testimonial-card');
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry, index) {
+                if (entry.isIntersecting) {
+                    setTimeout(function() {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    }, index * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        cards.forEach(function(card) {
+            observer.observe(card);
+        });
+    });
+</script>
+{% endblock %}
